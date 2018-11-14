@@ -19,6 +19,9 @@
       let qTitle = $('.q-title');
       let loadMore = $('#load-more');
 
+      //set li height default to title's height
+      qaListItem.height(qTitle.height());
+
       // QA Constructor Function:
       function generateQA(title, answer){
         this.html = "<li class='qa-list-item'><header class='q-title'>";
@@ -29,9 +32,6 @@
         this.html += "<p>" + this.answer + "</p></section></li>";
         qaContainer.append(this.html);
       }
-
-      //set li height default to title's height
-      qaListItem.height(qTitle.height());
 
       // qTitle.on('click', function(){
       qaContainer.on('click', ".q-title", function(event){
@@ -58,6 +58,7 @@
       //load a qa-list-item on 'Load More' click:
       loadMore.on('click', function(){
         new generateQA("Question 100", "lorem ipsum dolor");
+        qaContainer.children('.qa-list-item').height(qTitle.height());
       });
 
 
