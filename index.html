@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FAQ Accordion</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+  <link href='css/style.css' rel='stylesheet' type='text/css'>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(function(){
+
+      let qaContainer = $('#qa-container');
+      let qaListItem = $('.qa-list-item');
+      let qTitle = $('.q-title');
+      let loadMore = $('#load-more');
+
+      // QA Constructor Function:
+      function generateQA(title, answer){
+        this.html = "<li class='qa-list-item'><header class='q-title'>";
+        this.title = title;
+        this.answer = answer;
+        this.html += "<h2>" + this.title + "</h2>" + "<i class='fas fa-angle-down'></i></header>";
+        this.html += "<section class='q-body'>";
+        this.html += "<p>" + this.answer + "</p></section></li>";
+        qaContainer.append(this.html);
+      }
+
+      //set li height default to title's height
+      qaListItem.height(qTitle.height());
+
+      // qTitle.on('click', function(){
+      qaContainer.on('click', ".q-title", function(event){
+        let el = $(this);
+        let otherQs = el.parent().siblings(".qa-list-item");
+        // Toggle li height on click
+        if(el.parent().height() == qTitle.height()){
+          el.parent().height("auto");
+        } else{
+          el.parent().height(qTitle.height());
+        }
+        // Toggle up and down arrow
+        el.children('i').toggleClass("fa-angle-down fa-angle-up");
+        // 'Close' other open questions and toggle their arrows
+        for(let i=0; i<otherQs.length; i++){
+          let question = otherQs.eq(i);
+          if(question.height() > qTitle.height()){
+            question.height(qTitle.height());
+            question.children('.q-title').children('i').toggleClass("fa-angle-down fa-angle-up");
+          }
+        }
+      });
+
+      //load a qa-list-item on 'Load More' click:
+      loadMore.on('click', function(){
+        new generateQA("Question 100", "lorem ipsum dolor");
+      });
+
+
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <header id="main-header">
+      <h1>FAQ</h1>
+      <form action="##"> <!-- example: <form action="/action_page.php"> -->
+        <input type="text" name="search" value="">
+        <input type="submit" value="Search">
+      </form>
+    </header>
+
+    <ul id="qa-container">
+      <li class="qa-list-item">
+        <header class="q-title">
+          <h2>Question One</h2>
+          <i class="fas fa-angle-down"></i>
+        </header>
+        <section class="q-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae.</p>
+        </section>
+      </li>
+      <li class="qa-list-item">
+        <header class="q-title">
+          <h2>Question Two</h2>
+          <i class="fas fa-angle-down"></i>
+        </header>
+        <section class="q-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae.<br><br>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br><br>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem.
+          </p>
+        </section>
+      </li>
+      <li class="qa-list-item">
+        <header class="q-title">
+          <h2>Question Three</h2>
+          <i class="fas fa-angle-down 5x"></i>
+        </header>
+        <section class="q-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae.</p>
+        </section>
+      </li>
+      <li class="qa-list-item">
+        <header class="q-title">
+          <h2>Question Four</h2>
+          <i class="fas fa-angle-down"></i>
+        </header>
+        <section class="q-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae.</p>
+        </section>
+      </li>
+    </ul>
+
+    <footer>
+      <button id="load-more">Load More</button>
+    </footer>
+  </div>
+</body>
+</html>
