@@ -13,6 +13,24 @@
   crossorigin="anonymous"></script>
   <script type="text/javascript">
     $(function(){
+      let questions = [
+        {
+          title: "Question 5",
+          answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae."
+        },
+        {
+          title: "Question 6", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing."
+        },
+        {
+          title: "Question 7", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo."
+        },
+        {
+          title: "Question 8", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+        },
+        {
+          title: "Question 9", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae."
+        }
+      ];
 
       let qaContainer = $('#qa-container');
       let qaListItem = $('.qa-list-item');
@@ -56,11 +74,17 @@
       });
 
       //load a qa-list-item on 'Load More' click:
+      let questionsClone = questions.slice();
       loadMore.on('click', function(){
-        new generateQA("Question 100", "lorem ipsum dolor");
-        qaContainer.children('.qa-list-item').height(qTitle.height());
-      });
 
+        let randomQuestionIndexNum = Math.floor(Math.random() * questionsClone.length);
+        new generateQA(questionsClone[randomQuestionIndexNum].title, questionsClone[randomQuestionIndexNum].answer);
+        questionsClone.splice(randomQuestionIndexNum, 1);
+        qaContainer.children('.qa-list-item').height(qTitle.height());
+        if(questionsClone.length === 0){
+          loadMore.remove();
+        }
+      });
 
     });
   </script>
@@ -79,7 +103,7 @@
     <ul id="qa-container">
       <li class="qa-list-item">
         <header class="q-title">
-          <h2>Question One</h2>
+          <h2>Question 1</h2>
           <i class="fas fa-angle-down"></i>
         </header>
         <section class="q-body">
@@ -88,7 +112,7 @@
       </li>
       <li class="qa-list-item">
         <header class="q-title">
-          <h2>Question Two</h2>
+          <h2>Question 2</h2>
           <i class="fas fa-angle-down"></i>
         </header>
         <section class="q-body">
@@ -100,7 +124,7 @@
       </li>
       <li class="qa-list-item">
         <header class="q-title">
-          <h2>Question Three</h2>
+          <h2>Question 3</h2>
           <i class="fas fa-angle-down 5x"></i>
         </header>
         <section class="q-body">
@@ -109,7 +133,7 @@
       </li>
       <li class="qa-list-item">
         <header class="q-title">
-          <h2>Question Four</h2>
+          <h2>Question 4</h2>
           <i class="fas fa-angle-down"></i>
         </header>
         <section class="q-body">

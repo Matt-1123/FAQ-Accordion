@@ -61,19 +61,21 @@ body{
 }
 .container{
   width: 70%;
-  margin: 0 15% 0 15%;
+  margin: 25px 15% 0 15%;
 }
 #main-header{
   height: 80px;
+	line-height: 80px;
   background: #93a8ac;
 }
 header h1{
-  margin: 10px 0 10px 30px;
+  margin: 0 0 10px 30px;
+	font-size: 24px;
 }
 header form{
   position: absolute;
   right: 30px;
-  top: 28%; /* use 50% and offset-y later */
+  top: 0%;
   float: right;
   height: 28px;
 }
@@ -91,13 +93,6 @@ header form input[type="submit"]{
 .qa-list-item{
 	overflow: hidden;
 }
-/* .qa-list-item.closed{
-  height: 50px;
-  overflow: hidden;
-}
-.qa-list-item.open{
-  height: auto;
-} */
 .q-title{
   background: #8f8670;
   border: 1px solid #000;
