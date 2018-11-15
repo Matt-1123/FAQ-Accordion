@@ -13,6 +13,7 @@
   crossorigin="anonymous"></script>
   <script type="text/javascript">
     $(function(){
+      // array of questions to be displayed with 'Load More' button
       let questions = [
         {
           title: "Question 5",
@@ -31,7 +32,7 @@
           title: "Question 9", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae."
         }
       ];
-
+      // elements to target
       let qaContainer = $('#qa-container');
       let qaListItem = $('.qa-list-item');
       let qTitle = $('.q-title');
@@ -51,19 +52,27 @@
         qaContainer.append(this.html);
       }
 
-      // qTitle.on('click', function(){
+      // animate element's height to auto
+      function autoHeightAnimate(element, time){
+        var curHeight = element.height(), // Get Default Height
+        autoHeight = element.css('height', 'auto').height(); // Get Auto Height
+        element.height(curHeight); // Reset to Default Height
+        element.stop().animate({ height: autoHeight }, time); // Animate to Auto Height
+      }
+      // expand question on click
       qaContainer.on('click', ".q-title", function(event){
         let el = $(this);
         let otherQs = el.parent().siblings(".qa-list-item");
         // Toggle li height on click
         if(el.parent().height() == qTitle.height()){
-          el.parent().height("auto");
+          autoHeightAnimate(el.parent(), 400);
+          let autoHeight;
         } else{
-          el.parent().height(qTitle.height());
+          el.parent().stop().animate({ height: qTitle.height() }, 400);
         }
         // Toggle up and down arrow
         el.children('i').toggleClass("fa-angle-down fa-angle-up");
-        // 'Close' other open questions and toggle their arrows
+        // Close other open questions and toggle their arrows
         for(let i=0; i<otherQs.length; i++){
           let question = otherQs.eq(i);
           if(question.height() > qTitle.height()){
@@ -76,11 +85,11 @@
       //load a qa-list-item on 'Load More' click:
       let questionsClone = questions.slice();
       loadMore.on('click', function(){
-
         let randomQuestionIndexNum = Math.floor(Math.random() * questionsClone.length);
         new generateQA(questionsClone[randomQuestionIndexNum].title, questionsClone[randomQuestionIndexNum].answer);
         questionsClone.splice(randomQuestionIndexNum, 1);
-        qaContainer.children('.qa-list-item').height(qTitle.height());
+        qaContainer.children('.qa-list-item').stop().animate({ height: qTitle.height() }, 400);
+        // remove 'Load More' button if no questions left
         if(questionsClone.length === 0){
           loadMore.remove();
         }
