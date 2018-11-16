@@ -101,6 +101,10 @@ header form input[type="submit"]{
   padding: 0 10px;
   positon: relative;
 }
+.q-title:hover{
+	opacity: 0.9;
+	cursor: pointer;
+}
 .q-title::after{
 	content: "";
   position: absolute;

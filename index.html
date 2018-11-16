@@ -20,16 +20,16 @@
           answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae."
         },
         {
-          title: "Question 6", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing."
+          title: "Question 6", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo."
         },
         {
           title: "Question 7", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo."
         },
         {
-          title: "Question 8", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+          title: "Question 8", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo."
         },
         {
-          title: "Question 9", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae."
+          title: "Question 9", answer: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo numquam odio iste rem. Sapiente consequatur, aliquam nulla quis recusandae.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis repellendus facilis reiciendis iure ipsa, blanditiis possimus, ea natus, nostrum nemo."
         }
       ];
       // elements to target
@@ -85,10 +85,27 @@
       //load a qa-list-item on 'Load More' click:
       let questionsClone = questions.slice();
       loadMore.on('click', function(){
+        let qaListItems = $('.qa-list-item');
+        // Close other open questions and toggle their arrows
+        for(let i=0; i<qaListItems.length; i++){
+          let question = qaListItems.eq(i);
+          if(question.height() > qTitle.height()){
+            question.height(qTitle.height());
+            question.children('.q-title').children('i').toggleClass("fa-angle-down fa-angle-up");
+          }
+        }
+        // generate random li
         let randomQuestionIndexNum = Math.floor(Math.random() * questionsClone.length);
         new generateQA(questionsClone[randomQuestionIndexNum].title, questionsClone[randomQuestionIndexNum].answer);
         questionsClone.splice(randomQuestionIndexNum, 1);
-        qaContainer.children('.qa-list-item').stop().animate({ height: qTitle.height() }, 400);
+        $('.qa-list-item').last().height(qTitle.height());
+        // generate a second random li
+        if(questionsClone.length > 0){
+          randomQuestionIndexNum = Math.floor(Math.random() * questionsClone.length);
+          new generateQA(questionsClone[randomQuestionIndexNum].title, questionsClone[randomQuestionIndexNum].answer);
+          questionsClone.splice(randomQuestionIndexNum, 1);
+          $('.qa-list-item').last().height(qTitle.height());
+        }
         // remove 'Load More' button if no questions left
         if(questionsClone.length === 0){
           loadMore.remove();
